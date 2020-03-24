@@ -1,3 +1,6 @@
+import sys
+
+
 class Bug:
     label = "Bug"
     strong = ['Grass', 'Dark', 'Psychic']
@@ -162,6 +165,13 @@ class Water:
 
 class Pokemon:
     def __init__(self, type, fast, charge):
+        types = type + fast + charge
+        for t in types:
+            if t not in list(TYPES.keys()):
+                print("Failed to create Pokemon")
+                print("Please enter one of the valid types below")
+                print(TYPES.keys())
+                sys.exit()
         self.type = type
         self.fast = fast
         self.charge = charge
@@ -233,18 +243,37 @@ def optimal_types():
 
 
 def analyze_team(p1, p2, p3):
-    
+    types = remove_dups(p1.type + p2.type + p3.type)
+    weaks = []
+    for type in types:
+        weaks = weaks + get_type(type).weak
+    weaks = remove_dups(weaks)
+    strengths = remove_dups(p1.fast + p1.charge + p2.fast + p2.charge + p3.fast + p3.charge)
+    coverage = []
+    for strength in strengths:
+        coverage = coverage + get_type(strength).strong
+    coverage = remove_dups(coverage)
+    vuln = set(weaks) - set(coverage)
+    print("TEAM ANALYSIS")
+    print("Coverage: {}/18".format(len(coverage)))
+    print(coverage)
+    print()
+    print("Vulnerable to: {}".format(vuln))
+
     return        
 
 
 def main():
-    optimal_types()
+
+    show_opt = input("Show optimal teams? (y/n) ")
+    if show_opt == 'y':
+        optimal_types()
     
     print("Pokemon 1")
     type = input("Enter Pokemon 1's type: ")
     fast = input("Enter fast attack type: ")
     charged = input("Enter charged attack type(s): ")
-    poke1 = Pokemon(type.split(), fast, charged.split())
+    poke1 = Pokemon(type.split(), [fast], charged.split())
     print(poke1)
     print()
 
@@ -252,7 +281,7 @@ def main():
     type = input("Enter Pokemon 2's type: ")
     fast = input("Enter fast attack type: ")
     charged = input("Enter charged attack type(s): ")
-    poke2 = Pokemon(type.split(), fast, charged.split())
+    poke2 = Pokemon(type.split(), [fast], charged.split())
     print(poke2)
     print()
 
@@ -260,7 +289,7 @@ def main():
     type = input("Enter Pokemon 3's type: ")
     fast = input("Enter fast attack type: ")
     charged = input("Enter charged attack type(s): ")
-    poke3 = Pokemon(type.split(), fast, charged.split())
+    poke3 = Pokemon(type.split(), [fast], charged.split())
     print(poke3)
 
     analyze_team(poke1, poke2, poke3)

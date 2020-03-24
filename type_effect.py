@@ -78,9 +78,33 @@ def get_type(type):
 def remove_dups(list):
     return list(dict.fromkeys(list))
 
+def optimal_types():
+    types = TYPES.values()
+    classes = TYPES.values()
+    num_types = len(types)
+    teams = []
+    i = 0
+    while i < num_types:
+        j = 0
+        while j < num_types:
+            k = 0
+            while k < num_types:
+                new_team = [i, j, k]
+                new_team.sort()
+                if new_team not in teams:
+                    print(new_team)
+                    teams.append(new_team)
+                else:
+                    print(new_team, ' already exists')
+                k += 1
+            j += 1
+        i += 1
+    teams.sort()
+    print(teams) 
 
 
 def main():
+    optimal_types()
     type = get_type('Bug')
     print(type.strong)
 

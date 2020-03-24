@@ -160,6 +160,15 @@ class Water:
     def __str__(self):
         return self.__repr__()
 
+class Pokemon:
+    def __init__(self, type, fast, charge):
+        self.type = type
+        self.fast = fast
+        self.charge = charge
+    def __repr__(self):
+        return "TYPE: {0}\nFast: {1}\nCharge: {2}".format(self.type, self.fast, self.charge)
+
+
 TYPES = {'Bug' : Bug, 'Dark' : Dark, 'Dragon': Dragon, 'Electric' : Electric, 'Fairy' : Fairy, 'Fighting' : Fighting, 'Fire': Fire, 'Flying' : Flying, 'Ghost': Ghost, 'Grass' : Grass, 'Ground' : Ground, 'Ice' : Ice, 'Normal': Normal, 'Poison' : Poison, 'Psychic': Psychic, 'Rock': Rock, 'Steel' : Steel, 'Water' : Water}
 
 def get_type(type):
@@ -215,21 +224,46 @@ def optimal_types():
     team_stats.sort(key=lambda team: team[1], reverse=True)
     print("TOP TEAMS BY HIGHEST COVERAGE:")
     i = 0
-    while i < 10:
+    while i < 20:
         stat = team_stats[i]
         print((stat[0][0]).label, (stat[0][1]).label, (stat[0][2]).label)
         print("Coverage: {0}/18, Vulnerabilities: {1}".format(stat[1], stat[2]))
         print()
         i += 1
 
-        
+
+def analyze_team(p1, p2, p3):
+    
+    return        
 
 
 def main():
     optimal_types()
+    
+    print("Pokemon 1")
+    type = input("Enter Pokemon 1's type: ")
+    fast = input("Enter fast attack type: ")
+    charged = input("Enter charged attack type(s): ")
+    poke1 = Pokemon(type.split(), fast, charged.split())
+    print(poke1)
+    print()
 
+    print("Pokemon 2")
+    type = input("Enter Pokemon 2's type: ")
+    fast = input("Enter fast attack type: ")
+    charged = input("Enter charged attack type(s): ")
+    poke2 = Pokemon(type.split(), fast, charged.split())
+    print(poke2)
+    print()
 
+    print("Pokemon 3")
+    type = input("Enter Pokemon 3's type: ")
+    fast = input("Enter fast attack type: ")
+    charged = input("Enter charged attack type(s): ")
+    poke3 = Pokemon(type.split(), fast, charged.split())
+    print(poke3)
 
+    analyze_team(poke1, poke2, poke3)
 
 
 if __name__ == '__main__':
